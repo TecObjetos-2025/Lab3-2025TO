@@ -19,7 +19,7 @@ TEST(ProfesorTest, GestionDeAlumnos)
     Profesor profe(201, "Maribel", "Guevara");
 
     // Sin alumnos al principio
-    EXPECT_EQ(prof.getCantidadAlumnos(), 0);
+    EXPECT_EQ(profe.getCantidadAlumnos(), 0);
 
     // Crear alumnos para que profesor los guarde
     Alumno *alumno1 = new Alumno(102, "Fabricio", "Balarezo", 5);
@@ -31,8 +31,4 @@ TEST(ProfesorTest, GestionDeAlumnos)
 
     // Verificar que se actualizo la cantidad
     EXPECT_EQ(profe.getCantidadAlumnos(), 2);
-
-    // Liberando memoria (la responsabilidad seria del profesor)
-    delete alumno1;
-    delete alumno2;
 }
