@@ -20,7 +20,7 @@ TEST(TareaTest, CreacionYEstadoInicial)
     EXPECT_EQ(tarea.getProfesor()->getId(), 201);
 
     // Tarea no entregada (por defecto)
-    EXPECT_EQ(tarea.isEntregada());
+    EXPECT_FALSE(tarea.isEntregada());
 }
 
 TEST(TareaTest, MarcarComoEntregada)
