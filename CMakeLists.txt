@@ -23,14 +23,26 @@ FetchContent_MakeAvailable(googletest)
 # --- Definición de Ejecutables ---
 
 # 1. El ejecutable principal del lab
-add_executable(App src/main.cpp)
+add_executable(App 
+  src/main.cpp
+  src/Alumno.cpp
+)
+
+# Incluir directorios para que el compilador encuentre los archivos .h
+target_include_directories(App PRIVATE ${PROJECT_SOURCE_DIR}/include)
 
 # 2. El ejecutable para las pruebas.
 # Habilitar las pruebas para que CTest (el corredor de pruebas de CMake) las reconozca.
 enable_testing()
 
 # Crear un ejecutable llamado "runTests" para las pruebas.
-add_executable(runTests tests/test_main.cpp)
+add_executable(runTests 
+  tests/test_main.cpp 
+  tests/test_alumno.cpp
+  src/Alumno.cpp
+)
+
+target_include_directories(runTests PRIVATE ${PROJECT_SOURCE_DIR}/include)
 
 # Vincular la librería de Google Test al ejecutable de pruebas.
 target_link_libraries(runTests GTest::gtest_main)
