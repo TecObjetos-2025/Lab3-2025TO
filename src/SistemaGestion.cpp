@@ -3,7 +3,9 @@
 #include "Alumno.h"
 #include "Profesor.h"
 
-// Iniciar puntero estatico
+#include <iostream>
+
+// Iniciar puntero estatico en null
 SistemaGestion *SistemaGestion::instance = nullptr;
 
 // Metodo estatico para getInstance()
@@ -16,14 +18,25 @@ SistemaGestion *SistemaGestion::getInstance()
     return instance;
 }
 
+// Metodo para reiniciar singleton
+void SistemaGestion::resetInstance()
+{
+    if (instance != nullptr)
+    {
+        delete instance;
+        instance = nullptr; // Nulo para el futuro
+    }
+}
+
 SistemaGestion::SistemaGestion() {}
 
 SistemaGestion::~SistemaGestion()
 {
-    for (Persona *p : personas)
+    for (auto &par : personas)
     {
-        delete p;
+        delete par;
     }
+    personas.clear();
     for (Tarea *t : tareas)
     {
         delete t;

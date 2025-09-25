@@ -28,6 +28,9 @@ public:
     // Acceso Global
     static SistemaGestion *getInstance();
 
+    // Reiniciar para pruebas de memoria
+    static void resetInstance();
+
     // Destructor
     ~SistemaGestion();
 
