@@ -31,4 +31,8 @@ TEST(ProfesorTest, GestionDeAlumnos)
 
     // Verificar que se actualizo la cantidad
     EXPECT_EQ(profe.getCantidadAlumnos(), 2);
+
+    // Liberar memoria para pruebas de memoria (la responsabilidad paso a SistemaGestion)
+    delete alumno1;
+    delete alumno2;
 }
