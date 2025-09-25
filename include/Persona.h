@@ -12,12 +12,14 @@ protected: // Para herencia
     std::string apellidos;
 
 public:
+    // Para pruebas de memoria
+    static int contadorInstancias;
+
     // Constructor
-    Persona(int id, const std::string &nombres, const std::string &apellidos)
-        : id(id), nombres(nombres), apellidos(apellidos) {}
+    Persona(int id, const std::string &nombres, const std::string &apellidos);
 
     // Destructor virtual
-    virtual ~Persona() {}
+    virtual ~Persona();
 
     // Getters
     int getId() const { return id; }

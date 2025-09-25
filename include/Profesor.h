@@ -18,7 +18,7 @@ public:
     // Constructor
     Profesor(int id, const std::string &nombres, const std::string &apellidos);
 
-    // Destructor (para destruir alumnos de su lista tambien)
+    // Destructor (Responsabilidad de liberar memoria recae en el SistemaGestion)
     ~Profesor();
 
     // Gestionar Alumnos
