@@ -43,3 +43,23 @@ TEST(SistemaGestionFuncionalidadTest, RegistroYConsultaPersonas)
     ASSERT_NE(alumno, nullptr);
     EXPECT_EQ(alumno->getGrado(), 6);
 }
+
+TEST(SistemaGestionMemoryTest, DestructorLiberaMemoria)
+{
+    // Estado limpio en Singleton
+    SistemaGestion::resetInstance();
+    ASSERT_EQ(Persona::contadorInstancias, 0);
+
+    // Obtener instancias y registrar  personas
+    SistemaGestion *sistema = SistemaGestion::getInstance();
+    sistema->registrarAlumno(105, "Test", "Memoria1", 1);
+    sistema->registrarProfesor(205, "Test", "Memoria2");
+
+    ASSERT_EQ(Persona::contadorInstancias, 2);
+
+    // Verificar destruccion Singleton
+    SistemaGestion::resetInstance();
+
+    // El contador deberia ser 0
+    EXPECT_EQ(Persona::contadorInstancias, 0);
+}
