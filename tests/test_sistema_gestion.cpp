@@ -7,7 +7,7 @@ TEST(SistemaGestionSingletonTest, InstanciaUnica)
     // Obtener la instancia
     SistemaGestion *instancia1 = SistemaGestion::getInstance();
 
-    ASSERT_NE(instanci1, nullptr);
+    ASSERT_NE(instancia1, nullptr);
 
     // Obteniendo instancia otra vez
     SistemaGestion *instancia2 = SistemaGestion::getInstance();

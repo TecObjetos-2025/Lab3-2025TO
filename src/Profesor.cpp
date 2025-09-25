@@ -7,14 +7,8 @@
 Profesor::Profesor(int id, const std::string &nombres, const std::string &apellidos)
     : Persona(id, nombres, apellidos) {}
 
-// Destructor (liberando memoria por cada Alumno)
-Profesor::~Profesor()
-{
-    for (Alumno *alumno : alumnosACargo)
-    {
-        delete alumno;
-    }
-}
+// Destructor (la responsabilidad la tiene el SistemaGestion)
+Profesor::~Profesor() {}
 
 // GESTION DE ALUMNOS
 void Profesor::agregarAlumno(Alumno *alumno)

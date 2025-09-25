@@ -28,6 +28,7 @@ add_executable(App
   src/Alumno.cpp
   src/Profesor.cpp
   src/Tarea.cpp
+  src/SistemaGestion.cpp
 )
 
 # Incluir directorios para que el compilador encuentre los archivos .h
@@ -43,9 +44,11 @@ add_executable(runTests
   tests/test_alumno.cpp
   tests/test_profesor.cpp
   tests/test_tarea.cpp
+  tests/test_sistema_gestion.cpp
   src/Alumno.cpp
   src/Profesor.cpp
   src/Tarea.cpp
+  src/SistemaGestion.cpp
 )
 
 target_include_directories(runTests PRIVATE ${PROJECT_SOURCE_DIR}/include)
