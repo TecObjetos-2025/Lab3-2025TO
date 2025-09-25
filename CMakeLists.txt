@@ -22,39 +22,36 @@ FetchContent_MakeAvailable(googletest)
 
 # --- Definición de Ejecutables ---
 
-# 1. El ejecutable principal del lab
-add_executable(App 
-  src/main.cpp
+# 1. Definición de la librería "core" y el ejecutable principal "mainApp".
+add_library(core
+  src/Persona.cpp
   src/Alumno.cpp
   src/Profesor.cpp
   src/Tarea.cpp
   src/SistemaGestion.cpp
 )
 
-# Incluir directorios para que el compilador encuentre los archivos .h
-target_include_directories(App PRIVATE ${PROJECT_SOURCE_DIR}/include)
+target_include_directories(core PUBLIC ${PROJECT_SOURCE_DIR}/include)
+
+add_executable(mainApp src/main.cpp)
+
+target_link_libraries(mainApp PRIVATE core)
 
 # 2. El ejecutable para las pruebas.
 # Habilitar las pruebas para que CTest (el corredor de pruebas de CMake) las reconozca.
 enable_testing()
 
 # Crear un ejecutable llamado "runTests" para las pruebas.
-add_executable(runTests 
-  tests/test_main.cpp 
-  tests/test_alumno.cpp
-  tests/test_profesor.cpp
-  tests/test_tarea.cpp
-  tests/test_sistema_gestion.cpp
-  src/Alumno.cpp
-  src/Profesor.cpp
-  src/Tarea.cpp
-  src/SistemaGestion.cpp
+add_executable(runTests
+    tests/test_main.cpp
+    tests/test_alumno.cpp
+    tests/test_profesor.cpp
+    tests/test_tarea.cpp
+    tests/test_sistema_gestion.cpp
 )
 
-target_include_directories(runTests PRIVATE ${PROJECT_SOURCE_DIR}/include)
-
-# Vincular la librería de Google Test al ejecutable de pruebas.
-target_link_libraries(runTests GTest::gtest_main)
+# Vincular la librería de Google Test  y el core al ejecutable de pruebas.
+target_link_libraries(runTests PRIVATE core GTest::gtest_main)
 
 # Final añadir las pruebas al corredor de pruebas de CMake.
 # Pruebas automáticas con Google Test.
