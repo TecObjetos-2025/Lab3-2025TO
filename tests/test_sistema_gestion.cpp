@@ -2,8 +2,24 @@
 #include <gtest/gtest.h>
 #include "SistemaGestion.h"
 #include "Alumno.h"
+#include "Profesor.h"
 
-TEST(SistemaGestionSingletonTest, InstanciaUnica)
+// Guia: https://www.tutorialspoint.com/gtest/gtest-test-fixtures.htm
+class SistemaGestionTest : public ::testing::Test
+{
+protected:
+    void SetUp() override
+    {
+        SistemaGestion::resetInstance();
+    }
+
+    void TearDown() override
+    {
+        SistemaGestion::resetInstance();
+    }
+};
+
+TEST_F(SistemaGestionTest, InstanciaUnica)
 {
     // Obtener la instancia
     SistemaGestion *instancia1 = SistemaGestion::getInstance();
@@ -17,7 +33,7 @@ TEST(SistemaGestionSingletonTest, InstanciaUnica)
     EXPECT_EQ(instancia1, instancia2);
 }
 
-TEST(SistemaGestionFuncionalidadTest, RegistroYConsultaPersonas)
+TEST_F(SistemaGestionTest, RegistroYConsultaPersonas)
 {
     SistemaGestion *sistema = SistemaGestion::getInstance();
 
@@ -44,10 +60,8 @@ TEST(SistemaGestionFuncionalidadTest, RegistroYConsultaPersonas)
     EXPECT_EQ(alumno->getGrado(), 6);
 }
 
-TEST(SistemaGestionMemoryTest, DestructorLiberaMemoria)
+TEST_F(SistemaGestionTest, DestructorLiberaMemoria)
 {
-    // Estado limpio en Singleton
-    SistemaGestion::resetInstance();
     ASSERT_EQ(Persona::contadorInstancias, 0);
 
     // Obtener instancias y registrar  personas
@@ -62,4 +76,25 @@ TEST(SistemaGestionMemoryTest, DestructorLiberaMemoria)
 
     // El contador deberia ser 0
     EXPECT_EQ(Persona::contadorInstancias, 0);
+}
+
+TEST_F(SistemaGestionTest, AsignarAlumnoAProfesor)
+{
+    SistemaGestion *sistema = SistemaGestion::getInstance();
+
+    sistema->registrarAlumno(101, "Fabricio", "Balarezo", 6);
+    sistema->registrarProfesor(201, "Maribel", "Guevara");
+
+    // La asignación debe ser exitosa.
+    bool exito = sistema->asignarAlumnoAProfesor(101, 201);
+    EXPECT_TRUE(exito);
+
+    // Verificamos que el profesor ahora tiene 1 alumno.
+    Profesor *profe = dynamic_cast<Profesor *>(sistema->getPersona(201));
+    ASSERT_NE(profe, nullptr);
+    EXPECT_EQ(profe->getCantidadAlumnos(), 1);
+
+    // Probamos un caso de fallo (ID de alumno no existe).
+    bool fallo = sistema->asignarAlumnoAProfesor(999, 201);
+    EXPECT_FALSE(fallo);
 }

@@ -67,3 +67,27 @@ Persona *SistemaGestion::getPersona(int id) const
     }
     return nullptr; // Si no se encuentra, retornar null
 }
+
+bool SistemaGestion::asignarAlumnoAProfesor(int idAlumno, int idProfesor)
+{
+    Persona *ptrAlumno = getPersona(idAlumno);
+    Persona *ptrProfesor = getPersona(idProfesor);
+
+    if (ptrAlumno == nullptr || ptrProfesor == nullptr)
+    {
+        return false;
+    }
+
+    Alumno *alumno = dynamic_cast<Alumno *>(ptrAlumno);
+    Profesor *profesor = dynamic_cast<Profesor *>(ptrProfesor);
+
+    // Si el tipo no es el correcto se debe fallar
+    if (alumno == nullptr || profesor == nullptr)
+    {
+        return false;
+    }
+
+    // Si todo bien, hacer la asignacion con exito
+    profesor->agregarAlumno(alumno);
+    return true;
+}
