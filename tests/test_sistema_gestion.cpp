@@ -123,3 +123,21 @@ TEST_F(SistemaGestionTest, ContarTareasEntregadasPorAlumno)
     sistema->registrarAlumno(102, "Axel", "Barriga", 6);
     EXPECT_EQ(sistema->contarTareasEntregadasDeAlumno(102), 0);
 }
+
+TEST_F(SistemaGestionTest, ContarAlumnosPorProfesor)
+{
+    SistemaGestion *sistema = SistemaGestion::getInstance();
+
+    sistema->registrarProfesor(201, "Maribel", "Guevara");
+    sistema->registrarAlumno(101, "Fabricio", "Balarezo", 6);
+    sistema->registrarAlumno(102, "Axel", "Barriga", 6);
+    sistema->asignarAlumnoAProfesor(101, 201);
+    sistema->asignarAlumnoAProfesor(102, 201);
+
+    int numAlumnos = sistema->contarAlumnosDeProfesor(201);
+
+    EXPECT_EQ(numAlumnos, 2);
+
+    sistema->registrarProfesor(206, "Luis", "Arroyo");
+    EXPECT_EQ(sistema->contarAlumnosDeProfesor(206), 0);
+}
