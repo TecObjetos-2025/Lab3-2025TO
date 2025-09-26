@@ -48,6 +48,7 @@ add_executable(runTests
     tests/test_profesor.cpp
     tests/test_tarea.cpp
     tests/test_sistema_gestion.cpp
+    tests/test_observer_pattern.cpp
 )
 
 # Vincular la librería de Google Test  y el core al ejecutable de pruebas.

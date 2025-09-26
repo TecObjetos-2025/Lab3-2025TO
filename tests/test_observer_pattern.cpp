@@ -22,7 +22,7 @@ TEST(ObserverPatternTest, ProfesorEsNotificadoCuandoSeEntregaLaTarea)
 {
     MockProfesor mockProf;
     Profesor *profeReal = new Profesor(201, "Maribel", "Guevara");
-    Tarea tarea("Observer Pattern", profeReal, "2025-09-26");
+    Tarea tarea(1, "Observer Pattern", profeReal, "2025-09-26");
 
     tarea.agregarObservador(&mockProf);
 
