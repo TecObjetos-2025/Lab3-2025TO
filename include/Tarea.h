@@ -3,12 +3,14 @@
 #define TAREA_H
 
 #include <string>
+#include "Sujeto.h"
 
 class Profesor;
 
-class Tarea
+class Tarea : public Sujeto
 {
 private:
+    int id; // NUEVO! para identificar
     std::string curso;
     std::string fechaPresentacion;
     bool entregada;
@@ -16,12 +18,13 @@ private:
 
 public:
     // Constructor
-    Tarea(const std::string &curso, Profesor *profesor, const std::string &fecha);
+    Tarea(int id, const std::string &curso, Profesor *profesor, const std::string &fecha);
 
     // Destructor por default, no necesita eliminar objetos
     ~Tarea() = default;
 
     // Getters
+    int getId() const;
     std::string getCurso() const;
     std::string getFechaPresentacion() const;
     bool isEntregada() const;

@@ -1,11 +1,18 @@
 // src/Tarea.cpp
+
+#include <iostream>
 #include "Tarea.h"
 #include "Profesor.h"
 
-Tarea::Tarea(const std::string &curso, Profesor *profesor, const std::string &fecha)
-    : curso(curso), profesorACargo(profesor), fechaPresentacion(fecha), entregada(false) {}
+Tarea::Tarea(int id, const std::string &curso, Profesor *profesor, const std::string &fecha)
+    : id(id), curso(curso), profesorACargo(profesor), fechaPresentacion(fecha), entregada(false) {}
 
 // Getters
+
+int Tarea::getId() const
+{
+    return id;
+}
 
 std::string Tarea::getCurso() const
 {
@@ -27,8 +34,10 @@ Profesor *Tarea::getProfesor() const
     return profesorACargo;
 }
 
-// Acciones de Tarea
+// Acciones de Tarea (Refactor para patron observer)
 void Tarea::marcarComoEntregada()
 {
-    entregada = true;
+    this->entregada = true;
+    std::cout << "TAREA " << this->id << ": Ha sido entregada. Notificando..." << std::endl;
+    notificarObservadores(this);
 }

@@ -4,15 +4,17 @@
 #define PROFESOR_H
 
 #include "Persona.h"
+#include "Observador.h"
 #include <vector>
 #include <string>
 
 class Alumno;
 
-class Profesor : public Persona
+class Profesor : public Persona, public Observador
 {
 private:
     std::vector<Alumno *> alumnosACargo;
+    int tareasRecibidas = 0;
 
 public:
     // Constructor
@@ -27,6 +29,10 @@ public:
 
     // Funcion Virtual
     std::string getTipo() const override;
+
+    // Metodos para logica con PATRON OBSERVER
+    void actualizar(Tarea *tarea) override;
+    int getTareasRecibidas() const;
 };
 
 #endif
