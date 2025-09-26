@@ -1,7 +1,7 @@
 // src/main.cpp
 #include <iostream>
 #include <string>
-#include <limits> // Necesario para std::numeric_limits
+#include <limits>
 
 // Sistema principal
 #include "SistemaGestion.h"
@@ -98,6 +98,17 @@ void registrarAlumnoUI()
     std::cout << "\n--- Registrar Nuevo Alumno ---" << std::endl;
     std::cout << "ID: ";
     std::cin >> id;
+
+    // --- Validación ---
+    if (SistemaGestion::getInstance()->getPersona(id) != nullptr)
+    {
+        std::cout << "\n[ERROR] Ya existe una persona con el ID " << id << ". No se pudo registrar.\n"
+                  << std::endl;
+        // Limpiar el buffer de entrada 'Just in case'
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        return; // Salir de la función para evitar el registro.
+    }
+
     std::cout << "Nombres: ";
     std::cin.ignore(); // Limpiar el buffer antes de leer una línea completa
     std::getline(std::cin, nombres);
@@ -105,8 +116,6 @@ void registrarAlumnoUI()
     std::getline(std::cin, apellidos);
     std::cout << "Grado (1-6): ";
     std::cin >> grado;
-
-    // LOGICA PARA VALIDAR DATOS
 
     SistemaGestion::getInstance()->registrarAlumno(id, nombres, apellidos, grado);
     std::cout << "\n[INFO] Alumno registrado con exito.\n"
@@ -141,18 +150,28 @@ void registrarProfesorUI()
     std::cout << "\n--- Registrar Nuevo Profesor ---" << std::endl;
     std::cout << "ID: ";
     std::cin >> id;
+
+    // --- Validación ---
+    if (SistemaGestion::getInstance()->getPersona(id) != nullptr)
+    {
+        std::cout << "\n[ERROR] Ya existe una persona con el ID " << id << ". No se pudo registrar.\n"
+                  << std::endl;
+        // Limpiar el buffer de entrada 'Just in case'
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        return; // Salir de la función para evitar el registro.
+    }
+
     std::cout << "Nombres: ";
     std::cin.ignore(); // Limpiar el buffer antes de leer una línea completa
     std::getline(std::cin, nombres);
     std::cout << "Apellidos: ";
     std::getline(std::cin, apellidos);
 
-    // LOGICA PARA VALIDAR DATOS
-
     SistemaGestion::getInstance()->registrarProfesor(id, nombres, apellidos);
     std::cout << "\n[INFO] Profesor registrado con exito.\n"
               << std::endl;
 }
+
 void registrarTareaUI()
 {
     int id;
@@ -161,20 +180,35 @@ void registrarTareaUI()
     std::string curso, fecha;
 
     std::cout << "\n--- Registrar Nueva Tarea ---" << std::endl;
-    std::cout << "ID: ";
+    std::cout << "ID de Tarea: ";
     std::cin >> id;
+    std::cout << "ID del Alumno Asignado: ";
+    std::cin >> idAlumno;
+    std::cout << "ID del profesor a Cargo: ";
+    std::cin >> idProfesor;
+
+    // --- Validación ---
+    Persona *alumno = SistemaGestion::getInstance()->getPersona(idAlumno);
+    Persona *profesor = SistemaGestion::getInstance()->getPersona(idProfesor);
+
+    if (alumno == nullptr || alumno->getTipo() != "Alumno")
+    {
+        std::cout << "\n[ERROR] No se encontro un Alumno con el ID " << idAlumno << ". No se pudo registrar la tarea.\n"
+                  << std::endl;
+        return;
+    }
+    if (profesor == nullptr || profesor->getTipo() != "Profesor")
+    {
+        std::cout << "\n[ERROR] No se encontro un Profesor con el ID " << idProfesor << ". No se pudo registrar la tarea.\n"
+                  << std::endl;
+        return;
+    }
+
     std::cout << "Curso: ";
     std::cin.ignore(); // Limpiar el buffer antes de leer una línea completa
     std::getline(std::cin, curso);
-    std::cout << "ID del alumno: ";
-    std::cin >> idAlumno;
-    std::cout << "ID del profesor: ";
-    std::cin >> idProfesor;
-    std::cout << "Fecha: ";
-    std::cin.ignore();
+    std::cout << "Fecha (YYYY-MM-DD): ";
     std::getline(std::cin, fecha);
-
-    // LOGICA PARA VALIDAR DATOS
 
     SistemaGestion::getInstance()->registrarTarea(id, curso, idAlumno, idProfesor, fecha);
     std::cout << "\n[INFO] Tarea registrada con exito.\n"
@@ -187,10 +221,13 @@ void consultarAlumnosDeProfesorUI()
     std::cout << "Ingrese el ID del Profesor: ";
     std::cin >> idProfesor;
 
-    // Validar que el profesor exista
-    if (SistemaGestion::getInstance()->getPersona(idProfesor) == nullptr)
+    // --- Validación ---
+    Persona *persona = SistemaGestion::getInstance()->getPersona(idProfesor);
+
+    // Verificar que la persona exista Y que sea del tipo correcto.
+    if (persona == nullptr || persona->getTipo() != "Profesor")
     {
-        std::cout << "\n[ERROR] No se encontro un profesor con ese ID.\n"
+        std::cout << "\n[ERROR] No se encontro un Profesor con ese ID.\n"
                   << std::endl;
         return;
     }
