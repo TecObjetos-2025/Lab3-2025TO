@@ -117,6 +117,14 @@ void registrarAlumnoUI()
     std::cout << "Grado (1-6): ";
     std::cin >> grado;
 
+    // --- ¡NUEVA VALIDACIÓN DE GRADO! ---
+    if (grado < 1 || grado > 6)
+    {
+        std::cout << "\n[ERROR] El grado debe ser un numero entre 1 y 6. No se pudo registrar.\n"
+                  << std::endl;
+        return;
+    }
+
     SistemaGestion::getInstance()->registrarAlumno(id, nombres, apellidos, grado);
     std::cout << "\n[INFO] Alumno registrado con exito.\n"
               << std::endl;
