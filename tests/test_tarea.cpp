@@ -3,14 +3,18 @@
 #include <gtest/gtest.h>
 #include "Tarea.h"
 #include "Profesor.h"
+#include "Alumno.h"
 
 TEST(TareaTest, CreacionYEstadoInicial)
 {
     // Profesor antes de Tarea
     Profesor profe(201, "Maribel", "Guevara");
 
+    // Alumno antes de Tarea
+    Alumno alumno(101, "Fabricio", "Balarezo", 6);
+
     // Crear tarea
-    Tarea tarea(1, "Matematicas", &profe, "2025-09-30");
+    Tarea tarea(1, "Matematicas", &alumno, &profe, "2025-09-30");
 
     EXPECT_EQ(tarea.getCurso(), "Matematicas");
     EXPECT_EQ(tarea.getFechaPresentacion(), "2025-09-30");
@@ -26,7 +30,8 @@ TEST(TareaTest, CreacionYEstadoInicial)
 TEST(TareaTest, MarcarComoEntregada)
 {
     Profesor profe(205, "Juan", "Villar");
-    Tarea tarea(2, "Historia", &profe, "2025-10-05");
+    Alumno alumno(101, "Fabricio", "Balarezo", 6);
+    Tarea tarea(2, "Historia", &alumno, &profe, "2025-10-05");
 
     EXPECT_FALSE(tarea.isEntregada());
 
