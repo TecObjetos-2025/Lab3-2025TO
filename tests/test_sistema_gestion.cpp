@@ -98,3 +98,28 @@ TEST_F(SistemaGestionTest, AsignarAlumnoAProfesor)
     bool fallo = sistema->asignarAlumnoAProfesor(999, 201);
     EXPECT_FALSE(fallo);
 }
+
+TEST_F(SistemaGestionTest, ContarTareasEntregadasPorAlumno)
+{
+    SistemaGestion *sistema = SistemaGestion::getInstance();
+
+    sistema->registrarAlumno(101, "Fabricio", "Balarezo", 6);
+    sistema->registrarProfesor(201, "Maribel", "Guevara");
+
+    // Orden de ID (Tarea, Alumno y Profesor)
+    sistema->registrarTarea(501, "Matematica Basica", 101, 201, "2025-10-01"); // NUEVO METODO PARA IMPLEMENTAR
+    sistema->registrarTarea(502, "Historia del Peru", 101, 201, "2025-10-03");
+    sistema->registrarTarea(503, "Ciencia y Tecnologia", 101, 201, "2025-10-05");
+
+    // Marcar una tarea
+    Tarea *tareaEntregada = sistema->getTarea(502); // NUEVO METODO A IMPLEMENTAR
+    ASSERT_NE(tareaEntregada, nullptr);
+    tareaEntregada->marcarComoEntregada();
+
+    int numEntregadas = sistema->contarTareasEntregadasDeAlumno(101); // NUEVO METODO PARA CONSULTA
+
+    EXPECT_EQ(numEntregadas, 1);
+
+    sistema->registrarAlumno(102, "Axel", "Barriga", 6);
+    EXPECT_EQ(sistema->contarTareasEntregadasDeAlumno(102), 0);
+}
