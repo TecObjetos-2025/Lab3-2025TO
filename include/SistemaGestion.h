@@ -39,6 +39,10 @@ public:
     void registrarProfesor(int id, const std::string &nombres, const std::string &apellidos);
     Persona *getPersona(int id) const;
     bool asignarAlumnoAProfesor(int idAlumno, int idProfesor);
+
+    void registrarTarea(int id, const std::string &curso, int idAlumno, int idProfesor, const std::string &fecha);
+    Tarea *getTarea(int id) const;
+    int contarTareasEntregadasDeAlumno(int idAlumno) const;
 };
 
 #endif

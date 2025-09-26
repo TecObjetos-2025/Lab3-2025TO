@@ -4,8 +4,8 @@
 #include "Tarea.h"
 #include "Profesor.h"
 
-Tarea::Tarea(int id, const std::string &curso, Profesor *profesor, const std::string &fecha)
-    : id(id), curso(curso), profesorACargo(profesor), fechaPresentacion(fecha), entregada(false) {}
+Tarea::Tarea(int id, const std::string &curso, Alumno *alumno, Profesor *profesor, const std::string &fecha)
+    : id(id), curso(curso), alumnoAsignado(alumno), profesorACargo(profesor), fechaPresentacion(fecha), entregada(false) {}
 
 // Getters
 
@@ -32,6 +32,11 @@ bool Tarea::isEntregada() const
 Profesor *Tarea::getProfesor() const
 {
     return profesorACargo;
+}
+
+Alumno *Tarea::getAlumno() const
+{
+    return alumnoAsignado;
 }
 
 // Acciones de Tarea (Refactor para patron observer)

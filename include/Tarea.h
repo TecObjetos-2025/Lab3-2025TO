@@ -6,19 +6,21 @@
 #include "Sujeto.h"
 
 class Profesor;
+class Alumno;
 
 class Tarea : public Sujeto
 {
 private:
-    int id; // NUEVO! para identificar
+    int id;
     std::string curso;
     std::string fechaPresentacion;
     bool entregada;
     Profesor *profesorACargo; // Puntero para referenciar al profesor.
+    Alumno *alumnoAsignado;   // Para funciones de consulta
 
 public:
     // Constructor
-    Tarea(int id, const std::string &curso, Profesor *profesor, const std::string &fecha);
+    Tarea(int id, const std::string &curso, Alumno *alumno, Profesor *profesor, const std::string &fecha);
 
     // Destructor por default, no necesita eliminar objetos
     ~Tarea() = default;
@@ -29,6 +31,7 @@ public:
     std::string getFechaPresentacion() const;
     bool isEntregada() const;
     Profesor *getProfesor() const;
+    Alumno *getAlumno() const;
 
     // Métodos de acción
     void marcarComoEntregada();

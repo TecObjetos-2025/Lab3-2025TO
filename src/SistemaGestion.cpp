@@ -91,3 +91,42 @@ bool SistemaGestion::asignarAlumnoAProfesor(int idAlumno, int idProfesor)
     profesor->agregarAlumno(alumno);
     return true;
 }
+
+// NUEVOS METODOS DE GESTION
+void SistemaGestion::registrarTarea(int id, const std::string &curso, int idAlumno, int idProfesor, const std::string &fecha)
+{
+    Alumno *alumno = dynamic_cast<Alumno *>(getPersona(idAlumno));
+    Profesor *profesor = dynamic_cast<Profesor *>(getPersona(idProfesor));
+    if (alumno && profesor)
+    {
+        Tarea *nuevaTarea = new Tarea(id, curso, alumno, profesor, fecha);
+        tareas.push_back(nuevaTarea);
+    }
+}
+
+Tarea *SistemaGestion::getTarea(int id) const
+{
+    for (Tarea *t : tareas)
+    {
+        if (t->getId() == id)
+        {
+            return t;
+        }
+    }
+}
+
+int SistemaGestion::contarTareasEntregadasDeAlumno(int idAlumno) const
+{
+    int contador = 0;
+    for (Tarea *t : tareas)
+    {
+        if (t->getAlumno() != nullptr && t->getAlumno()->getId() == idAlumno)
+        {
+            if (t->isEntregada())
+            {
+                contador++;
+            }
+        }
+    }
+    return contador;
+}
