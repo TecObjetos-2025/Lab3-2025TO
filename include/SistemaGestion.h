@@ -40,9 +40,11 @@ public:
     Persona *getPersona(int id) const;
     bool asignarAlumnoAProfesor(int idAlumno, int idProfesor);
 
+    // Nuevas funciones de gestion
     void registrarTarea(int id, const std::string &curso, int idAlumno, int idProfesor, const std::string &fecha);
     Tarea *getTarea(int id) const;
     int contarTareasEntregadasDeAlumno(int idAlumno) const;
+    int contarAlumnosDeProfesor(int idProfesor) const;
 };
 
 #endif

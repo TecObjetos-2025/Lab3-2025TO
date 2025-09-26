@@ -113,6 +113,7 @@ Tarea *SistemaGestion::getTarea(int id) const
             return t;
         }
     }
+    return nullptr;
 }
 
 int SistemaGestion::contarTareasEntregadasDeAlumno(int idAlumno) const
@@ -129,4 +130,14 @@ int SistemaGestion::contarTareasEntregadasDeAlumno(int idAlumno) const
         }
     }
     return contador;
+}
+
+int SistemaGestion::contarAlumnosDeProfesor(int idProfesor) const
+{
+    Profesor *profesor = dynamic_cast<Profesor *>(getPersona(idProfesor));
+    if (profesor)
+    {
+        return profesor->getCantidadAlumnos();
+    }
+    return 0; // De momento se maneja el error de manera sencilla
 }
