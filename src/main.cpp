@@ -11,6 +11,7 @@ void mostrarMenu();
 void registrarAlumnoUI();
 void registrarProfesorUI();
 void registrarTareaUI();
+void asignarAlumnoAProfesorUI();
 void consultarTareasDeAlumnoUI();
 void consultarAlumnosDeProfesorUI();
 
@@ -54,12 +55,15 @@ int main()
             registrarTareaUI();
             break;
         case 4:
-            consultarTareasDeAlumnoUI();
+            asignarAlumnoAProfesorUI();
             break;
         case 5:
-            consultarAlumnosDeProfesorUI();
+            consultarTareasDeAlumnoUI();
             break;
         case 6:
+            consultarAlumnosDeProfesorUI();
+            break;
+        case 7:
             std::cout << "Saliendo del programa..." << std::endl;
             break;
         default:
@@ -68,7 +72,7 @@ int main()
             break;
         }
 
-    } while (opcion != 6);
+    } while (opcion != 7);
 
     // Llamar al reset para buena practica
     SistemaGestion::resetInstance();
@@ -84,9 +88,10 @@ void mostrarMenu()
     std::cout << "1. Registrar Alumno" << std::endl;
     std::cout << "2. Registrar Profesor" << std::endl;
     std::cout << "3. Registrar Tarea" << std::endl;
-    std::cout << "4. Consultar tareas entregadas de un Alumno" << std::endl;
-    std::cout << "5. Consultar alumnos de un Profesor" << std::endl;
-    std::cout << "6. Salir" << std::endl;
+    std::cout << "4. Asignar Alumno a Profesor" << std::endl; // <-- NUEVA OPCIÓN
+    std::cout << "5. Consultar tareas entregadas de un Alumno" << std::endl;
+    std::cout << "6. Consultar alumnos de un Profesor" << std::endl;
+    std::cout << "7. Salir" << std::endl; // <-- Nuevo número de salida
     std::cout << "==========================" << std::endl;
 }
 
@@ -222,6 +227,30 @@ void registrarTareaUI()
     std::cout << "\n[INFO] Tarea registrada con exito.\n"
               << std::endl;
 }
+
+void asignarAlumnoAProfesorUI()
+{
+    int idAlumno, idProfesor;
+    std::cout << "\n--- Asignar Alumno a Profesor ---" << std::endl;
+    std::cout << "Ingrese el ID del Alumno: ";
+    std::cin >> idAlumno;
+    std::cout << "Ingrese el ID del Profesor: ";
+    std::cin >> idProfesor;
+
+    bool exito = SistemaGestion::getInstance()->asignarAlumnoAProfesor(idAlumno, idProfesor);
+
+    if (exito)
+    {
+        std::cout << "\n[INFO] Alumno asignado al profesor con exito.\n"
+                  << std::endl;
+    }
+    else
+    {
+        std::cout << "\n[ERROR] No se pudo realizar la asignacion. Verifique que ambos IDs sean correctos y correspondan a un Alumno y un Profesor.\n"
+                  << std::endl;
+    }
+}
+
 void consultarAlumnosDeProfesorUI()
 {
     int idProfesor;
